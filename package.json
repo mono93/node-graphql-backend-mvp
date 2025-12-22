@@ -1,0 +1,63 @@
+{
+  "name": "graphql-backend-mvp",
+  "version": "1.0.0",
+  "description": "A production-style GraphQL API built with Node.js, demonstrating secure Auth0 authentication, role-based access control, MongoDB persistence via TypeORM, automated testing, and enforced Git workflows using Husky. Designed as an MVP to showcase end-to-end backend engineering skills and business-ready architecture",
+  "keywords": [
+    "GraphQL",
+    "Backend",
+    "MVP",
+    "Node",
+    "Express"
+  ],
+  "homepage": "https://github.com/mono93/node-graphql-backend-mvp#readme",
+  "bugs": {
+    "url": "https://github.com/mono93/node-graphql-backend-mvp/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mono93/node-graphql-backend-mvp.git"
+  },
+  "license": "MIT",
+  "author": "Monojit Saha",
+  "type": "module",
+  "main": "src/server.ts",
+  "lint-staged": {
+    "*.ts": [
+      "prettier --check --config .prettierrc",
+      "tsc --noEmit"
+    ],
+    "*.{js,jsx,mjs}": [
+      "echo '❌ JavaScript files are not allowed. Use TypeScript.' && exit 1"
+    ]
+  },
+  "scripts": {
+    "dev": "tsx watch --env-file=.env src/server.ts",
+    "prepare": "husky",
+    "format": "prettier --write \"src/**/*.{ts,json}\" --config .prettierrc",
+    "format:check": "prettier --check \"src/**/*.{ts,json}\" --config .prettierrc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@apollo/server": "^5.2.0",
+    "@as-integrations/express5": "^1.1.2",
+    "express": "^5.2.1",
+    "graphql": "^16.12.0",
+    "mongoose": "^9.0.2",
+    "winston": "^3.19.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.2.0",
+    "@commitlint/config-conventional": "^20.2.0",
+    "@eslint/js": "^9.16.0",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.0",
+    "@typescript-eslint/eslint-plugin": "^8.16.0",
+    "@typescript-eslint/parser": "^8.16.0",
+    "eslint": "^9.16.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.7.4",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
