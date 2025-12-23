@@ -21,14 +21,6 @@
   "author": "Monojit Saha",
   "type": "module",
   "main": "src/server.ts",
-  "lint-staged": {
-    "*.ts": [
-      "prettier --check --config .prettierrc"
-    ],
-    "*.{js,jsx,mjs}": [
-      "echo '❌ JavaScript files are not allowed. Use TypeScript.' && exit 1"
-    ]
-  },
   "scripts": {
     "dev": "tsx watch --env-file=.env src/server.ts",
     "prepare": "husky",
