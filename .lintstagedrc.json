@@ -1,8 +1,4 @@
 {
-  "*.ts": [
-    "prettier --check --config .prettierrc"
-  ],
-  "*.{js,jsx,mjs}": [
-    "echo \"❌ JavaScript files are not allowed. Use TypeScript.\" && exit 1"
-  ]
+  "*.{ts,json}": ["prettier --write --config .prettierrc"],
+  "*.{js,jsx,mjs}": ["echo \"❌ JavaScript files are not allowed. Use TypeScript.\" && exit 1"]
 }
