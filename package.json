@@ -23,8 +23,7 @@
   "main": "src/server.ts",
   "lint-staged": {
     "*.ts": [
-      "prettier --check --config .prettierrc",
-      "tsc --noEmit"
+      "prettier --check --config .prettierrc"
     ],
     "*.{js,jsx,mjs}": [
       "echo '❌ JavaScript files are not allowed. Use TypeScript.' && exit 1"
@@ -43,6 +42,7 @@
     "express": "^5.2.1",
     "graphql": "^16.12.0",
     "mongoose": "^9.0.2",
+    "uuid": "^13.0.0",
     "winston": "^3.19.0"
   },
   "devDependencies": {

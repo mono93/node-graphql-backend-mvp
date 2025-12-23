@@ -1,0 +1,14 @@
+const typeDefs = `
+  type Query {
+    hello: String!
+    user(id: ID!): User
+  }
+
+  type User {
+    id: ID!
+    name: String!
+    email: String!
+  }
+`;
+
+export { typeDefs };
