@@ -6,4 +6,7 @@ const authenticateUser = auth({
   issuerBaseURL: envConfig.issuerBaseUrl,
 });
 
+// Future enhancement: Add role-based access control (RBAC) checks here
+// Future enhancement: add admin user authentication here
+
 export default authenticateUser;
