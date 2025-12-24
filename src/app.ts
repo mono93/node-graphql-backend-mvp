@@ -1,11 +1,9 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { ApolloServer } from '@apollo/server';
-import { expressMiddleware as apolloMiddleware } from '@as-integrations/express5';
 
 import { httpLogger } from './common/logging/httpLogger';
 import logger from './common/logging';
-import { typeDefs } from './graphql/schema';
-import { resolvers } from './graphql/resolvers';
+import { API_BASE_PATH } from './common/constants';
+import { createRoutes } from './routes';
 
 const createApp = async () => {
   const app = express();
@@ -20,14 +18,8 @@ const createApp = async () => {
     next();
   });
 
-  const appolloServer = new ApolloServer({
-    typeDefs,
-    resolvers,
-  });
-
-  await appolloServer.start();
-
-  app.use('/graphql', apolloMiddleware(appolloServer));
+  const apiRouter = await createRoutes();
+  app.use(API_BASE_PATH, apiRouter);
 
   app.use((req, res) => {
     res.status(404).send({ message: 'No route found' });
