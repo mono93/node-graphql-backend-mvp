@@ -4,7 +4,7 @@ import { expressMiddleware as apolloMiddleware } from '@as-integrations/express5
 
 import { typeDefs } from '../graphql/schema';
 import { resolvers } from '../graphql/resolvers';
-import authenticateUser from '../middleware.ts/authentication';
+import { authenticateUser } from '../middleware/authentication';
 
 const initializeGraphQLRoute = async () => {
   const appolloServer = new ApolloServer({
