@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import { saveUser } from '../controller/save-user.controller';
+import { authenticateUser } from '../middleware/authentication';
+import { requireAdmin } from '../middleware/requireAdmin';
 
 const userRouter = Router();
 
-// Future enhancement: Add authentication middleware here in the future
-userRouter.post('/save-user', saveUser);
+userRouter.post('/save-user', authenticateUser, requireAdmin, saveUser);
 
 export default userRouter;

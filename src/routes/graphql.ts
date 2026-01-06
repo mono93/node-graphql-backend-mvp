@@ -2,9 +2,9 @@ import { Router } from 'express';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware as apolloMiddleware } from '@as-integrations/express5';
 
-import { typeDefs } from '../graphql/schema';
-import { resolvers } from '../graphql/resolvers';
+import { typeDefs, resolvers } from '../graphql';
 import { authenticateUser } from '../middleware/authentication';
+import { createContext } from '../graphql/context';
 
 const initializeGraphQLRoute = async () => {
   const appolloServer = new ApolloServer({
@@ -15,7 +15,13 @@ const initializeGraphQLRoute = async () => {
   await appolloServer.start();
 
   const graphqlRouter = Router();
-  graphqlRouter.use('/', authenticateUser, apolloMiddleware(appolloServer));
+  graphqlRouter.use(
+    '/',
+    authenticateUser,
+    apolloMiddleware(appolloServer, {
+      context: async ({ req }) => createContext({ req }),
+    }),
+  );
 
   return graphqlRouter;
 };

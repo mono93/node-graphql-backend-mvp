@@ -1,5 +1,4 @@
 import { auth } from 'express-oauth2-jwt-bearer';
-import { Request, Response, NextFunction } from 'express';
 import { envConfig } from '../config';
 
 /**
