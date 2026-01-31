@@ -1,6 +1,6 @@
 import { authorizeIncidentAccess, Action } from '../../common/auth/auth';
 
-interface IIncident {
+export interface IIncident {
   id: string;
   title: string;
   description: string;
@@ -11,7 +11,7 @@ interface IIncident {
   updatedDate?: Date;
 }
 
-interface IFormattedIncident {
+export interface IFormattedIncident {
   id: string;
   title: string;
   description: string;

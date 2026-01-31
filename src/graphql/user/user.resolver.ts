@@ -1,6 +1,6 @@
 import { authorizeUserAccess, Action } from '../../common/auth/auth';
 
-interface IUser {
+export interface IUser {
   id: string;
   name: string;
   email: string;
@@ -9,7 +9,7 @@ interface IUser {
   createdDate: Date;
 }
 
-interface IFormattedUser {
+export interface IFormattedUser {
   id: string;
   name: string;
   email: string;
