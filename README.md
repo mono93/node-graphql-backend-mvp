@@ -104,7 +104,7 @@ A production-style GraphQL API built with Node.js, demonstrating secure Auth0 au
 2. **Configure environment variables**:
    ```env
    # Server
-   PORT=4000
+   PORT=8081
 
    # MongoDB
    MONGO_URI=mongodb://localhost:27017/graphql_db
@@ -178,7 +178,7 @@ package.json                    # Dependencies and scripts
 
 ## 📡 API Documentation
 
-The GraphQL API is available at `http://localhost:4000/graphql`
+The GraphQL API is available at `http://localhost:4000/api/v1/graphql`
 
 ### User Management
 
@@ -421,7 +421,7 @@ const authResult = await authorizeUserAccess(
    ```
 
 4. **Access the API**:
-   - GraphQL: `http://localhost:4000/api/v1/graphql`
+   - GraphQL: `http://localhost:8081/api/v1/graphql`
    - MongoDB: `mongodb://admin:password@localhost:27017`
 
 ### Docker Commands
@@ -453,7 +453,7 @@ docker-compose restart
 
 ### Services
 
-- **app** - GraphQL API (port 4000)
+- **app** - GraphQL API (port 8081)
 - **mongo** - MongoDB database (port 27017)
   - Username: `admin`
   - Password: `password`
