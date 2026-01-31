@@ -4,11 +4,18 @@ export const userTypeDefs = `
     name: String!
     email: String!
     userType: String!
+    auth0Id: String!
     createdAt: String!
   }
 
   type Query {
     user(id: ID!): User
-    users: [User!]!
+    users(page: Int, limit: Int): [User!]!
+  }
+
+  type Mutation {
+    createUser(name: String!, email: String!, userType: String!, auth0Id: String!): User!
+    updateUser(id: ID!, name: String, email: String, userType: String): User
+    deleteUser(id: ID!): Boolean!
   }
 `;

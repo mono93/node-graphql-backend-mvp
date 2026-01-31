@@ -7,6 +7,7 @@ export interface User {
   name: string;
   email: string;
   userType: UserType;
+  auth0Id: string;
   createdBy?: ObjectId;
   createdDate?: Date;
 }

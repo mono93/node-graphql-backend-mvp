@@ -1,6 +1,7 @@
 import { Request } from 'express';
 import userService, { UserServiceType } from '../common/service/user.service';
 import incidentService, { IncidentServiceType } from '../common/service/incident.service';
+import { envConfig } from '../config';
 
 export interface GraphQLContext {
   user: {
@@ -14,7 +15,13 @@ export interface GraphQLContext {
 }
 
 export const createContext = async ({ req }: { req: Request }): Promise<GraphQLContext> => {
-  const user = (req as any).user || null;
+  const payload = (req as any).auth?.payload;
+  const user = payload
+    ? {
+        id: payload.sub,
+        roles: payload[`${envConfig.nameSpace}/roles`] || [],
+      }
+    : null;
 
   return {
     user,

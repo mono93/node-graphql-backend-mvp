@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:8.0
+    container_name: graphql-mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: graphql_db
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - graphql-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: graphql-backend
+    environment:
+      PORT: 4000
+      MONGO_URI: mongodb://admin:password@mongo:27017/graphql_db?authSource=admin
+      ISSUER_BASE_URL: ${ISSUER_BASE_URL}
+      AUDIENCE: ${AUDIENCE}
+      NAME_SPACE: ${NAME_SPACE}
+      NODE_ENV: development
+    ports:
+      - '4000:4000'
+    depends_on:
+      mongo:
+        condition: service_healthy
+    volumes:
+      - ./src:/app/src
+      - /app/node_modules
+    networks:
+      - graphql-network
+
+volumes:
+  mongo_data:
+
+networks:
+  graphql-network:
+    driver: bridge

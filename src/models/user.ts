@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { UserAttrs } from '../interface/user.types';
+import { auth } from 'express-oauth2-jwt-bearer';
 
 interface UserDocument extends mongoose.Document, UserAttrs {}
 
@@ -26,6 +27,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ['Admin', 'User'],
       required: true,
+    },
+    auth0Id: {
+      type: String,
+      required: true,
+      unique: true,
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
