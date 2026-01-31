@@ -105,6 +105,7 @@ export const incidentResolvers = {
         severity,
         status: 'Open',
         createdBy: ctx.user.id,
+        updatedBy: ctx.user.id,
       });
 
       return formatIncident(doc);
@@ -133,10 +134,13 @@ export const incidentResolvers = {
       }
 
       const updateData: any = {};
+
       if (title !== undefined) updateData.title = title;
       if (description !== undefined) updateData.description = description;
-      if (status !== undefined) updateData.status = status;
       if (severity !== undefined) updateData.severity = severity;
+      if (status !== undefined) updateData.status = status;
+
+      updateData.updatedBy = ctx.user?.id;
       updateData.updatedDate = new Date();
 
       const doc = await ctx.services.incidentService.update(id, updateData);
@@ -146,10 +150,10 @@ export const incidentResolvers = {
       return formatIncident(doc);
     },
 
-    deleteIncident: async (_: any, { id }: { id: string }, ctx: any) => {
+    closeIncident: async (_: any, { id }: { id: string }, ctx: any) => {
       const authResult = await authorizeIncidentAccess(
         ctx.user,
-        'DELETE' as Action,
+        'UPDATE' as Action,
         id,
         ctx.services.incidentService,
       );
@@ -158,8 +162,17 @@ export const incidentResolvers = {
         throw new Error(authResult.message);
       }
 
-      await ctx.services.incidentService.delete(id);
-      return true;
+      const updateData: any = {
+        status: 'Closed',
+        updatedBy: ctx.user?.id,
+        updatedDate: new Date(),
+      };
+
+      const doc = await ctx.services.incidentService.update(id, updateData);
+
+      if (!doc) return null;
+
+      return formatIncident(doc);
     },
   },
 };

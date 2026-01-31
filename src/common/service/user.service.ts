@@ -1,23 +1,38 @@
-import { User } from '../../interface/user.types';
+import { User, UserType } from '../../interface/user.types';
 import { User as UserModel } from '../../models/user';
+import mongoose from 'mongoose';
 
 class UserService {
-  async create(userData: Omit<User, 'id'>): Promise<User> {
-    const { name, email, userType, auth0Id }: User = userData;
+  async create(userData: {
+    name: string;
+    email: string;
+    userType: UserType;
+    auth0Id: string;
+    userId: string;
+  }): Promise<User> {
+    const { name, email, userType, auth0Id, userId } = userData;
 
     const existingUser = await UserModel.findOne({ email });
     if (existingUser) {
       throw new Error('Email in use');
     }
 
-    const user = UserModel.build({ name, email, userType, auth0Id });
+    let createdBy = new mongoose.Types.ObjectId(userId);
+    let updatedBy = new mongoose.Types.ObjectId(userId);
+
+    const user = UserModel.build({ name, email, userType, auth0Id, createdBy, updatedBy });
     await user.save();
 
     return user;
   }
 
   async update(id: string, updateData: Partial<User>): Promise<User | null> {
-    const user = await UserModel.findByIdAndUpdate(id, updateData, { new: true });
+    const dataToUpdate: any = { ...updateData };
+    dataToUpdate.updatedDate = new Date();
+    if (dataToUpdate.updatedBy) {
+      dataToUpdate.updatedBy = new mongoose.Types.ObjectId(dataToUpdate.updatedBy);
+    }
+    const user = await UserModel.findByIdAndUpdate(id, dataToUpdate, { new: true });
     return user;
   }
 
@@ -27,6 +42,11 @@ class UserService {
 
   async getById(id: string): Promise<User | null> {
     const user = await UserModel.findById(id);
+    return user;
+  }
+
+  async getByAuth0Id(auth0Id: string): Promise<User | null> {
+    const user = await UserModel.findOne({ auth0Id });
     return user;
   }
 

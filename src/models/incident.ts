@@ -37,6 +37,11 @@ const incidentSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
+    updatedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
     createdDate: {
       type: Date,
       default: Date.now,

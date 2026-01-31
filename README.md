@@ -141,9 +141,6 @@ src/
 │       ├── user.service.ts     # User CRUD operations
 │       └── incident.service.ts # Incident CRUD operations
 │
-├── controller/
-│   └── save-user.controller.ts # HTTP controller example
-│
 ├── graphql/                    # GraphQL setup
 │   ├── index.ts                # Type defs and resolvers
 │   ├── context.ts              # GraphQL context factory
@@ -424,7 +421,7 @@ const authResult = await authorizeUserAccess(
    ```
 
 4. **Access the API**:
-   - GraphQL: `http://localhost:4000/graphql`
+   - GraphQL: `http://localhost:4000/api/v1/graphql`
    - MongoDB: `mongodb://admin:password@localhost:27017`
 
 ### Docker Commands

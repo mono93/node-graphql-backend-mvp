@@ -9,6 +9,7 @@ export interface Incident {
   status: IncidentStatus;
   severity: IncidentSeverity;
   createdBy: ObjectId;
+  updatedBy: ObjectId;
   createdDate?: Date;
   updatedDate?: Date;
 }

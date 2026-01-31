@@ -5,7 +5,7 @@ class IncidentService {
   async create(
     incidentData: Omit<Incident, 'id' | 'createdDate' | 'updatedDate'>,
   ): Promise<Incident> {
-    const { title, description, status, severity, createdBy } = incidentData;
+    const { title, description, status, severity, createdBy, updatedBy } = incidentData;
 
     const incident = IncidentModel.build({
       title,
@@ -13,6 +13,7 @@ class IncidentService {
       status,
       severity,
       createdBy,
+      updatedBy,
     });
     await incident.save();
 

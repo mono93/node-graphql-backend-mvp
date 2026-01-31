@@ -19,6 +19,6 @@ export const incidentTypeDefs = `
   type Mutation {
     createIncident(title: String!, description: String!, severity: String!): Incident!
     updateIncident(id: ID!, title: String, description: String, status: String, severity: String): Incident
-    deleteIncident(id: ID!): Boolean!
+    closeIncident(id: ID!): Incident!
   }
 `;

@@ -16,12 +16,19 @@ export interface GraphQLContext {
 
 export const createContext = async ({ req }: { req: Request }): Promise<GraphQLContext> => {
   const payload = (req as any).auth?.payload;
-  const user = payload
-    ? {
-        id: payload.sub,
+  let user: { id: string; roles: string[] } | null = null;
+
+  if (payload) {
+    const auth0Id = payload.sub;
+    // Fetch the user from MongoDB to get their _id
+    const dbUser = await userService.getByAuth0Id(auth0Id);
+    if (dbUser) {
+      user = {
+        id: dbUser.id || '',
         roles: payload[`${envConfig.nameSpace}/roles`] || [],
-      }
-    : null;
+      };
+    }
+  }
 
   return {
     user,

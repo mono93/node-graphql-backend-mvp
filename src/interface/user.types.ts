@@ -10,6 +10,8 @@ export interface User {
   auth0Id: string;
   createdBy?: ObjectId;
   createdDate?: Date;
+  updatedBy?: ObjectId;
+  updatedDate?: Date;
 }
 
 export interface UserAttrs extends User {}

@@ -81,11 +81,14 @@ export const userResolvers = {
         throw new Error(authResult.message);
       }
 
+      let updatedBy: string = ctx.user?.id;
+
       const doc = await ctx.services.userService.create({
         name,
         email,
         userType,
         auth0Id,
+        updatedBy,
       });
 
       return formatUser(doc);
@@ -110,6 +113,8 @@ export const userResolvers = {
       const updateData: any = {};
       if (name !== undefined) updateData.name = name;
       if (userType !== undefined) updateData.userType = userType;
+
+      updateData.updatedBy = ctx.user?.id;
 
       const doc = await ctx.services.userService.update(id, updateData);
 
