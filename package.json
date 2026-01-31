@@ -22,7 +22,8 @@
   "type": "module",
   "main": "src/server.ts",
   "scripts": {
-    "dev": "tsx watch --env-file=.env src/server.ts",
+    "local": "tsx watch --env-file=.env src/server.ts",
+    "dev": "tsx watch src/server.ts",
     "prepare": "husky",
     "format": "prettier --write \"src/**/*.{ts,json}\" --config .prettierrc",
     "format:check": "prettier --check \"src/**/*.{ts,json}\" --config .prettierrc",
