@@ -41,18 +41,22 @@ class UserService {
   }
 
   async getById(id: string): Promise<User | null> {
-    const user = await UserModel.findById(id);
+    const user = await UserModel.findById(id).populate('incidents');
     return user;
   }
 
   async getByAuth0Id(auth0Id: string): Promise<User | null> {
-    const user = await UserModel.findOne({ auth0Id });
+    const user = await UserModel.findOne({ auth0Id }).populate('incidents');
     return user;
   }
 
   async getAll(page: number = 1, limit: number = 10): Promise<User[]> {
     const skip = (page - 1) * limit;
-    const users = await UserModel.find().skip(skip).limit(limit).sort({ createdDate: -1 });
+    const users = await UserModel.find()
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdDate: -1 })
+      .populate('incidents');
     return users;
   }
 

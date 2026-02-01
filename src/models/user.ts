@@ -52,14 +52,27 @@ const userSchema = new mongoose.Schema(
   },
   {
     toJSON: {
+      virtuals: true,
       transform(doc, ret: any) {
         ret.id = ret._id;
         delete ret._id;
         delete ret.__v;
       },
     },
+    toObject: { virtuals: true },
   },
 );
+
+/**
+ * Virtual populate:
+ * One User -> Many Incidents
+ * Incident.createdBy -> User._id
+ */
+userSchema.virtual('incidents', {
+  ref: 'Incident',
+  localField: '_id',
+  foreignField: 'createdBy',
+});
 
 userSchema.statics.build = (attrs: UserAttrs) => {
   return new User(attrs);
