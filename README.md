@@ -178,7 +178,7 @@ package.json                    # Dependencies and scripts
 
 ## 📡 API Documentation
 
-The GraphQL API is available at `http://localhost:4000/api/v1/graphql`
+The GraphQL API is available at `http://localhost:8081/api/v1/graphql`
 
 ### User Management
 

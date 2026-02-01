@@ -48,6 +48,14 @@ class IncidentService {
   async delete(id: string): Promise<void> {
     await IncidentModel.findByIdAndDelete(id);
   }
+
+  async isOwner(userId: string, incidentId: string): Promise<boolean> {
+    const incident = await IncidentModel.findById(incidentId);
+    if (!incident) {
+      return false;
+    }
+    return incident.createdBy.toString() === userId;
+  }
 }
 
 // ✅ Singleton instance

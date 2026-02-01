@@ -30,7 +30,7 @@ RUN npm ci
 COPY --from=builder /app/src ./src
 
 # Expose port
-EXPOSE 4000
+EXPOSE 8081
 
 # Start the application
 CMD ["npm", "run", "dev"]

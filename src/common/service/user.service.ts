@@ -55,6 +55,10 @@ class UserService {
     const users = await UserModel.find().skip(skip).limit(limit).sort({ createdDate: -1 });
     return users;
   }
+
+  async isOwner(userId: string, targetUserId: string): Promise<boolean> {
+    return userId === targetUserId;
+  }
 }
 
 // ✅ Singleton instance

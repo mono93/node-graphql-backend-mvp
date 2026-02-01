@@ -11,6 +11,7 @@ export const userTypeDefs = `
   type Query {
     user(id: ID!): User
     users(page: Int, limit: Int): [User!]!
+    myDetails: User!
   }
 
   type Mutation {

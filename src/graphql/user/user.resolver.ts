@@ -62,6 +62,22 @@ export const userResolvers = {
 
       return docs.map((doc: any) => formatUser(doc));
     },
+
+    myDetails: async (_: any, __: any, ctx: any) => {
+      const authResult = await authorizeUserAccess(ctx.user, 'READ' as Action);
+
+      if (!authResult.allowed) {
+        throw new Error(authResult.message);
+      }
+
+      const doc = await ctx.services.userService.getById(ctx.user.id);
+
+      if (!doc) {
+        throw new Error('User not found');
+      }
+
+      return formatUser(doc);
+    },
   },
 
   Mutation: {
