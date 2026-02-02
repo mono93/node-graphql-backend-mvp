@@ -6,6 +6,7 @@ export const userTypeDefs = `
     userType: String!
     auth0Id: String!
     createdAt: String!
+    incidents: [Incident!]!
   }
 
   type Query {

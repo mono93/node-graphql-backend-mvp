@@ -5,8 +5,9 @@ export const incidentTypeDefs = `
     description: String!
     status: String!
     severity: String!
-    createdBy: ID!
-    createdDate: String!
+    createdBy: User
+    updatedBy: User
+    createdDate: String
     updatedDate: String
   }
 

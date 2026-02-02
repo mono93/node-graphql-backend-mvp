@@ -21,7 +21,7 @@ class IncidentService {
   }
 
   async getById(id: string): Promise<Incident | null> {
-    const incident = await IncidentModel.findById(id);
+    const incident = await IncidentModel.findById(id).populate('createdBy').populate('updatedBy');
     return incident;
   }
 
@@ -30,13 +30,20 @@ class IncidentService {
     const incidents = await IncidentModel.find({ createdBy: userId })
       .skip(skip)
       .limit(limit)
-      .sort({ createdDate: -1 });
+      .sort({ createdDate: -1 })
+      .populate('createdBy')
+      .populate('updatedBy');
     return incidents;
   }
 
   async listAll(page: number = 1, limit: number = 10): Promise<Incident[]> {
     const skip = (page - 1) * limit;
-    const incidents = await IncidentModel.find().skip(skip).limit(limit).sort({ createdDate: -1 });
+    const incidents = await IncidentModel.find()
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdDate: -1 })
+      .populate('createdBy')
+      .populate('updatedBy');
     return incidents;
   }
 

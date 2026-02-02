@@ -1,4 +1,5 @@
 import { authorizeUserAccess, Action } from '../../common/auth/auth';
+import { IFormattedIncident, IIncident } from '../incident/incident.resolver';
 
 export interface IUser {
   id: string;
@@ -7,6 +8,7 @@ export interface IUser {
   userType: string;
   auth0Id: string;
   createdDate: Date;
+  incidents: IIncident[];
 }
 
 export interface IFormattedUser {
@@ -16,6 +18,7 @@ export interface IFormattedUser {
   userType: string;
   auth0Id: string;
   createdAt: string;
+  incidents: IFormattedIncident[];
 }
 
 const formatUser = (doc: IUser): IFormattedUser => ({
@@ -25,6 +28,17 @@ const formatUser = (doc: IUser): IFormattedUser => ({
   userType: doc.userType,
   auth0Id: doc.auth0Id,
   createdAt: doc.createdDate.toISOString(),
+  incidents: doc.incidents.map((incident) => ({
+    id: incident.id,
+    title: incident.title,
+    description: incident.description,
+    status: incident.status,
+    severity: incident.severity,
+    createdBy: incident.createdBy,
+    updatedBy: incident.updatedBy,
+    createdDate: incident.createdDate.toISOString(),
+    updatedDate: incident.updatedDate ? incident.updatedDate.toISOString() : undefined,
+  })),
 });
 
 export const userResolvers = {
@@ -64,7 +78,12 @@ export const userResolvers = {
     },
 
     myDetails: async (_: any, __: any, ctx: any) => {
-      const authResult = await authorizeUserAccess(ctx.user, 'READ' as Action);
+      const authResult = await authorizeUserAccess(
+        ctx.user,
+        'READ' as Action,
+        ctx.user?.id,
+        ctx.services.userService,
+      );
 
       if (!authResult.allowed) {
         throw new Error(authResult.message);

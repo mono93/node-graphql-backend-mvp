@@ -7,6 +7,7 @@ export interface IIncident {
   status: string;
   severity: string;
   createdBy: string;
+  updatedBy: string;
   createdDate: Date;
   updatedDate?: Date;
 }
@@ -18,6 +19,7 @@ export interface IFormattedIncident {
   status: string;
   severity: string;
   createdBy: string;
+  updatedBy: string;
   createdDate: string;
   updatedDate: string | undefined;
 }
@@ -29,6 +31,7 @@ const formatIncident = (doc: IIncident): IFormattedIncident => ({
   status: doc.status,
   severity: doc.severity,
   createdBy: doc.createdBy,
+  updatedBy: doc.updatedBy,
   createdDate: doc.createdDate.toISOString(),
   updatedDate: doc.updatedDate ? doc.updatedDate.toISOString() : undefined,
 });
